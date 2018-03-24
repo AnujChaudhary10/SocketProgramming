@@ -17,23 +17,23 @@ public class Server {
 		s.communicateToClient();
 	}
 
-	Socket oldSo;
+	//Socket oldSo;
 
 	public void communicateToClient() throws IOException {
 		Socket so = ss.accept();
-		if (oldSo != null && !oldSo.equals(so)) {
+	//	if (oldSo != null && !oldSo.equals(so)) {
 			ReadData r =  new ReadData(so);
 			Thread t =  new Thread(r);
 			t.start();
-		} else {
+		/*} else {
 			oldSo = so;
 			ReadData r =  new ReadData(so);
 			Thread t =  new Thread(r);
 			t.start();
-		}
+		}*/
 		communicateToClient();
 	}
-}
+ }
 class ReadData implements Runnable {
 	final Socket so;
 
