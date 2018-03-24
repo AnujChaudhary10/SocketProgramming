@@ -22,20 +22,25 @@ public class Client implements Runnable {
 		this.name = name;
 	}
 
-	public static void main(String[] args) throws UnknownHostException, IOException {
-		for (String name : clientName) {
-			Client c = new Client("localhost", 9291, name);
-			Thread t = new Thread(c);
-			t.start();
-			System.out.println(name + " started");
-		}
+	public static void main(String[] args) {
+		clientName.forEach((name) -> {
+			try {
+				Client c = new Client("localhost", 9291, name);
+				Thread t = new Thread(c);
+				t.start();
+				System.out.println(name + " started");
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	public void run() {
 		try {
 			DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 			int count = 0;
-
 			while (count < 11) {
 				dos.writeUTF(name + " count : " + count);
 				count++;
